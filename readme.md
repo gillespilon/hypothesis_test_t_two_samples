@@ -15,11 +15,16 @@ Download the data file:
 
 # Methodology
 
-I will write the methodology for this repository.
+There are two methods presented in this repository:
+
+1. Hypothesis testing
+2. Confidence interval
+
+The methods use pandas, scipy.stats, numpy, and matplotlib.
 
 # License
 
-Copyright (c) 2017 GILLES PILON <gillespilon13@gmail.com>
+Copyright (c) 2017 GILLES PILON <gillespilon13@gmail.com>.
 
 Permission to use, copy, modify, and distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
