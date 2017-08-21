@@ -1,6 +1,11 @@
 # Hypothesis test, paired t
 
-I will write the purpose for this repository.
+A two-sample t test answers these questions:
+
+1. Is the average of a sample from process 1 different from the average of a sample from process 2?
+2. Is the average of a sample from process 1 greater than the average of a sample from process 2?
+3. Is the average of a sample from process 1 less than the average of a sample from process 2?
+4. Is the average of a sample from process 1 different from the average of a sample from process 2 by a predetermined amount?
 
 # Data
 
