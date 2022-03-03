@@ -49,21 +49,8 @@ def main():
     )
     # print assumptions
     assumptions()
-    # calculate parametric statistics
-    levels = df['x'].sort_values().unique()
-    for level in np.nditer(op=levels):
-        print(level)
-        series = df['y'][df['x'] == level]
-        parametric_statistics = ds.parametric_summary(series=series)
-        print(parametric_statistics)
-        print()
-    # calculate nonparametric statistics
-    for level in np.nditer(op=levels):
-        print(level)
-        series = df['y'][df['x'] == level]
-        nonparametric_statistics = ds.nonparametric_summary(series=series)
-        print(nonparametric_statistics)
-        print()
+    # call ds.two_sample_t
+    ds.two_sample_t(df=df, xlabel='x', ylabel='y', hypothesis='unequal')
     # scenario one, equal variances
     print("Scenario 1")
     print(
