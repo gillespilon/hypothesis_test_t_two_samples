@@ -47,8 +47,6 @@ def main():
     df, sample_one, sample_two = create_dataframes(
         title=path_in_title, filetypes=filetypes
     )
-    # print assumptions
-    assumptions()
     # call ds.two_sample_t
     ds.two_sample_t(df=df, xlabel='x', ylabel='y', hypothesis='unequal')
     # scenario one, equal variances
