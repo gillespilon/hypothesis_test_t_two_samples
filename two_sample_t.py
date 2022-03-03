@@ -25,6 +25,7 @@ Requires datasense https://github.com/gillespilon/datasense
 
 from typing import List, NoReturn, Tuple
 from pathlib import Path
+import time
 
 import scipy.stats as stats
 import datasense as ds
@@ -42,11 +43,16 @@ def main():
     original_stdout = ds.html_begin(
         output_url=output_url, header_title=header_title, header_id=header_id
     )
+    ds.script_summary(
+        script_path=Path(__file__),
+        action='started at'
+    )
     # create DataFrames
     # df, sample_one, sample_two = create_dataframe_examples()
     df, sample_one, sample_two = create_dataframes(
         title=path_in_title, filetypes=filetypes
     )
+    start_time = time.perf_counter()
     # call ds.two_sample_t
     ds.two_sample_t(df=df, xlabel='x', ylabel='y', hypothesis='unequal')
     # scenario one, equal variances
@@ -65,6 +71,15 @@ def main():
         sample_one=sample_one, sample_two=sample_two, equal_var=False
     )
     print()
+    stop_time = time.perf_counter()
+    ds.script_summary(
+        script_path=Path(__file__),
+        action='finished at'
+    )
+    ds.report_summary(
+        start_time=start_time,
+        stop_time=stop_time
+    )
     ds.html_end(original_stdout=original_stdout, output_url=output_url)
 
 
