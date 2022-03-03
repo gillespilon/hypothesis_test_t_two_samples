@@ -136,36 +136,5 @@ def scenario_four():
     pass
 
 
-def assumptions() -> NoReturn:
-    print("ASSUMPTIONS")
-    print()
-    print("The data are continuous interval or ratio scales.")
-    print()
-    print(
-        "The data in each sample follow a normal distribution with mean mu "
-        "and variance sigma squared."
-    )
-    print()
-    print(
-        "The sample variances s squared follow a chi-squared distribution "
-        "with rho degrees of freedom under the null hypothesis, where rho "
-        "is a positive constant."
-    )
-    print()
-    print(
-        "(sample average - population averagee) and the sample standard "
-        "deviations s are independent."
-    )
-    print("The size of each sample may be equal or unequal.")
-    print()
-    print("The variance of each sample may be equal or unequal.")
-    print()
-    print(
-        "The data should be sampled independently from the two populations "
-        "being compared."
-    )
-    print()
-
-
 if __name__ == "__main__":
     main()
