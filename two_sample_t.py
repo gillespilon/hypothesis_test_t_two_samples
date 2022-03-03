@@ -49,6 +49,14 @@ def main():
     )
     # print assumptions
     assumptions()
+    # calculate parametric statistics
+    levels = df['x'].sort_values().unique()
+    for level in np.nditer(op=levels):
+        print(level)
+        series = df['y'][df['x'] == level]
+        parametric_statistics = ds.parametric_summary(series=series)
+        print(parametric_statistics)
+        print()
     # scenario one, equal variances
     print("Scenario 1")
     print(
