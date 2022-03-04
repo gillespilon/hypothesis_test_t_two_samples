@@ -23,7 +23,7 @@ If you read a data file:
 Requires datasense https://github.com/gillespilon/datasense
 """
 
-from typing import List, NoReturn, Tuple
+from typing import List, Tuple
 from pathlib import Path
 import time
 
