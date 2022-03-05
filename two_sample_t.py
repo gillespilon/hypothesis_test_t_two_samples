@@ -61,6 +61,8 @@ def main():
         df=df, xlabel='x', ylabel='y', alternative_hypothesis='unequal',
         significance_level=0.05
     )
+    print("========== end of scenario ==========")
+    print()
     # scenario 2
     print("Scenario 2")
     print(
@@ -71,6 +73,8 @@ def main():
         df=df, xlabel='x', ylabel='y', alternative_hypothesis='less than',
         significance_level=0.05
     )
+    print("========== end of scenario ==========")
+    print()
     # scenario 3
     print("Scenario 3")
     print(
@@ -81,6 +85,8 @@ def main():
         df=df, xlabel='x', ylabel='y', alternative_hypothesis='greater than',
         significance_level=0.05
     )
+    print("========== end of scenario ==========")
+    print()
     stop_time = time.perf_counter()
     ds.script_summary(
         script_path=Path(__file__),
