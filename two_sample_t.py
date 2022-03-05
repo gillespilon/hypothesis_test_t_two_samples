@@ -27,10 +27,8 @@ from typing import List, Tuple
 from pathlib import Path
 import time
 
-import scipy.stats as stats
 import datasense as ds
 import pandas as pd
-import numpy as np
 
 
 def main():
@@ -53,24 +51,17 @@ def main():
         title=path_in_title, filetypes=filetypes
     )
     start_time = time.perf_counter()
-    # call ds.two_sample_t
-    ds.two_sample_t(df=df, xlabel='x', ylabel='y', hypothesis='unequal')
     # scenario one, equal variances
     print("Scenario 1")
     print(
         "Is the average of sample one different from the average of sample "
         "two?\n"
     )
-    print("Assume the sample variances are equal.")
-    test_statistic, p_value = scenario_one(
-        sample_one=sample_one, sample_two=sample_two, equal_var=True
+    # scenario 1
+    ds.two_sample_t(
+        df=df, xlabel='x', ylabel='y', alternative_hypothesis='unequal',
+        significance_level=0.05
     )
-    print()
-    print("Assume the sample variances are unequal.")
-    test_statistic, p_value = scenario_one(
-        sample_one=sample_one, sample_two=sample_two, equal_var=False
-    )
-    print()
     stop_time = time.perf_counter()
     ds.script_summary(
         script_path=Path(__file__),
@@ -106,47 +97,6 @@ def create_dataframes(
     sample_one = df[df["x"] == 1]
     sample_two = df[df["x"] == 2]
     return (df, sample_one, sample_two)
-
-
-def scenario_one(
-    sample_one: pd.DataFrame, sample_two: pd.DataFrame, equal_var: bool = True
-) -> List[np.ndarray]:
-    """
-    Two-sample t test.
-    Is the average of sample one different from the average of sample two?
-
-    Parameters
-    ----------
-    sample_one : pd.DataFrame
-        Sample one DataFrame.
-    sample_two : pd.DataFrame
-        Sample two DataFrame.
-
-    Returns
-    -------
-    test_statistic : np.ndarray
-        The calculated t statistics.
-    p_value : np.ndarray
-        The calculated p values.
-    """
-    test_statistic, p_value = stats.ttest_ind(
-        a=sample_one, b=sample_two, equal_var=equal_var
-    )
-    print(f't: {test_statistic[-1]:7.3f}')
-    print(f'p: {p_value[-1]:7.3f}')
-    return (test_statistic, p_value)
-
-
-def scenario_two():
-    pass
-
-
-def scenario_three():
-    pass
-
-
-def scenario_four():
-    pass
 
 
 if __name__ == "__main__":
