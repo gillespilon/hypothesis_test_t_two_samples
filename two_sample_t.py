@@ -6,10 +6,10 @@ Scenario 1
 Is the average of sample one different from the average of sample two?
 
 Scenario 2
-Is the average of sample one greater than the average of sample two?
+Is the average of sample one less than the average of sample two?
 
 Scenario 3
-Is the average of sample one less than the average of sample two?
+Is the average of sample one greater than the average of sample two?
 
 Scenario 4
 Is the average of sample one different from the average of sample two by a
@@ -51,15 +51,24 @@ def main():
         title=path_in_title, filetypes=filetypes
     )
     start_time = time.perf_counter()
-    # scenario one, equal variances
+    # scenario 1
     print("Scenario 1")
     print(
         "Is the average of sample one different from the average of sample "
         "two?\n"
     )
-    # scenario 1
     ds.two_sample_t(
         df=df, xlabel='x', ylabel='y', alternative_hypothesis='unequal',
+        significance_level=0.05
+    )
+    # scenario 3
+    print("Scenario 2")
+    print(
+        "Is the average of sample one greater than the average of sample "
+        "two?\n"
+    )
+    ds.two_sample_t(
+        df=df, xlabel='x', ylabel='y', alternative_hypothesis='greater than',
         significance_level=0.05
     )
     stop_time = time.perf_counter()
