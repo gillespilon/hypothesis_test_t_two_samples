@@ -61,8 +61,18 @@ def main():
         df=df, xlabel='x', ylabel='y', alternative_hypothesis='unequal',
         significance_level=0.05
     )
-    # scenario 3
+    # scenario 2
     print("Scenario 2")
+    print(
+        "Is the average of sample one less than the average of sample "
+        "two?\n"
+    )
+    ds.two_sample_t(
+        df=df, xlabel='x', ylabel='y', alternative_hypothesis='less than',
+        significance_level=0.05
+    )
+    # scenario 3
+    print("Scenario 3")
     print(
         "Is the average of sample one greater than the average of sample "
         "two?\n"
