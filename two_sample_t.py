@@ -11,15 +11,23 @@ Is the average of sample one less than the average of sample two?
 Scenario 3
 Is the average of sample one greater than the average of sample two?
 
-If you read a data file:
+Example of how a data file should look:
 - first row is column labels: x y
-- first column is sample number: 1 2
-- second column is data
+- first column is sample number, must be integers: 1 2
+- second column is data, int or float, no nan
+
+    x   y
+    1   30
+    1   33
+    1   37
+    2   29
+    2   31
+    2   34
 
 Requires datasense https://github.com/gillespilon/datasense
 """
 
-from typing import List, Tuple
+from typing import IO, List, NoReturn, Tuple, Union
 from pathlib import Path
 import time
 
@@ -34,6 +42,8 @@ def main():
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
+    xlabel = "x"
+    ylabel = "y"
     original_stdout = ds.html_begin(
         output_url=output_url, header_title=header_title, header_id=header_id
     )
@@ -44,6 +54,10 @@ def main():
     print("Data file", path_in)
     print()
     start_time = time.perf_counter()
+    validate_data(
+        df=df, path_in=path_in, xlabel=xlabel, ylabel=ylabel,
+        original_stdout=original_stdout, output_url=output_url
+    )
     # scenario 1
     print("Scenario 1")
     print(
@@ -52,8 +66,8 @@ def main():
     )
     ds.two_sample_t(
         df=df,
-        xlabel="x",
-        ylabel="y",
+        xlabel=xlabel,
+        ylabel=ylabel,
         alternative_hypothesis="unequal",
         significance_level=0.05,
     )
@@ -67,8 +81,8 @@ def main():
     )
     ds.two_sample_t(
         df=df,
-        xlabel="x",
-        ylabel="y",
+        xlabel=xlabel,
+        ylabel=ylabel,
         alternative_hypothesis="less than",
         significance_level=0.05,
     )
@@ -82,8 +96,8 @@ def main():
     )
     ds.two_sample_t(
         df=df,
-        xlabel="x",
-        ylabel="y",
+        xlabel=xlabel,
+        ylabel=ylabel,
         alternative_hypothesis="greater than",
         significance_level=0.05,
     )
@@ -98,12 +112,36 @@ def main():
 def create_dataframe(
     title: str, filetypes: List[Tuple[str, str]]
 ) -> Tuple[pd.DataFrame, Path]:
+    """
+    TODO: add docstring
+    """
     initialdir = Path(__file__).parent.resolve()
     path_in = ds.ask_open_file_name_path(
         title=title, initialdir=initialdir, filetypes=filetypes
     )
     df = ds.read_file(file_name=path_in)
     return (df, path_in)
+
+
+def validate_data(
+    df: pd.DataFrame,
+    path_in: Union[Path, str],
+    xlabel: str,
+    ylabel: str,
+    original_stdout: IO[str],
+    output_url: str
+) -> NoReturn:
+    """
+    TODO: add docstring
+    """
+    xlabel_type = df[xlabel].dtype
+    if xlabel_type not in ['int64']:
+        print("Data in xlabel column are not of type integer.")
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    ylabel_type = df[ylabel].dtype
+    if ylabel_type not in ['int64', 'float64']:
+        print("Data in ylabel column are not of type integer or float.")
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
 
 
 if __name__ == "__main__":
