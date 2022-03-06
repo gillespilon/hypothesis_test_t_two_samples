@@ -37,13 +37,12 @@ def main():
     original_stdout = ds.html_begin(
         output_url=output_url, header_title=header_title, header_id=header_id
     )
-    ds.script_summary(
-        script_path=Path(__file__),
-        action='started at'
-    )
+    ds.script_summary(script_path=Path(__file__), action="started at")
     # create DataFrames
     # df, sample_one, sample_two = create_dataframe_examples()
-    df = create_dataframe(title=path_in_title, filetypes=filetypes)
+    df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
+    print("Data file", path_in)
+    print()
     start_time = time.perf_counter()
     # scenario 1
     print("Scenario 1")
@@ -52,8 +51,11 @@ def main():
         "two?\n"
     )
     ds.two_sample_t(
-        df=df, xlabel='x', ylabel='y', alternative_hypothesis='unequal',
-        significance_level=0.05
+        df=df,
+        xlabel="x",
+        ylabel="y",
+        alternative_hypothesis="unequal",
+        significance_level=0.05,
     )
     print("========== end of scenario ==========")
     print()
@@ -64,8 +66,11 @@ def main():
         "two?\n"
     )
     ds.two_sample_t(
-        df=df, xlabel='x', ylabel='y', alternative_hypothesis='less than',
-        significance_level=0.05
+        df=df,
+        xlabel="x",
+        ylabel="y",
+        alternative_hypothesis="less than",
+        significance_level=0.05,
     )
     print("========== end of scenario ==========")
     print()
@@ -76,33 +81,29 @@ def main():
         "two?\n"
     )
     ds.two_sample_t(
-        df=df, xlabel='x', ylabel='y', alternative_hypothesis='greater than',
-        significance_level=0.05
+        df=df,
+        xlabel="x",
+        ylabel="y",
+        alternative_hypothesis="greater than",
+        significance_level=0.05,
     )
     print("========== end of scenario ==========")
     print()
     stop_time = time.perf_counter()
-    ds.script_summary(
-        script_path=Path(__file__),
-        action='finished at'
-    )
-    ds.report_summary(
-        start_time=start_time,
-        stop_time=stop_time
-    )
+    ds.script_summary(script_path=Path(__file__), action="finished at")
+    ds.report_summary(start_time=start_time, stop_time=stop_time)
     ds.html_end(original_stdout=original_stdout, output_url=output_url)
 
 
 def create_dataframe(
-    title: str,
-    filetypes: List[Tuple[str, str]]
-) -> pd.DataFrame:
+    title: str, filetypes: List[Tuple[str, str]]
+) -> Tuple[pd.DataFrame, Path]:
     initialdir = Path(__file__).parent.resolve()
     path_in = ds.ask_open_file_name_path(
         title=title, initialdir=initialdir, filetypes=filetypes
     )
     df = ds.read_file(file_name=path_in)
-    return df
+    return (df, path_in)
 
 
 if __name__ == "__main__":
