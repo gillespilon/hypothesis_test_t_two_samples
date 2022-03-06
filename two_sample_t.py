@@ -169,6 +169,14 @@ def validate_data(
             "Fix this error or delete row(s)."
         )
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    # ensure column y contains no nans
+    count_y_nans = df[ylabel].isna().sum()
+    if count_y_nans != 0:
+        print(
+            f"Column {ylabel} contains {count_y_nans} NaN. "
+            "Fix this error or delete row(s)."
+        )
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
 
 if __name__ == "__main__":
     main()
