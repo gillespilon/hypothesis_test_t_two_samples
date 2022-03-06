@@ -161,7 +161,14 @@ def validate_data(
     if ylabel_type not in ['int64', 'float64']:
         print("Data in ylabel column are not of type integer or float.")
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-
+    # ensure column x contains no nans
+    count_x_nans = df[xlabel].isna().sum()
+    if count_x_nans != 0:
+        print(
+            f"Column {xlabel} contains {count_x_nans} NaN. "
+            "Fix this error or delete row(s)."
+        )
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
 
 if __name__ == "__main__":
     main()
