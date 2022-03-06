@@ -169,6 +169,14 @@ def validate_data(
             "Fix this error or delete row(s)."
         )
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    # ensure column x contains no nans
+    count_x_nans = df[xlabel].isna().sum()
+    if count_x_nans != 0:
+        print(
+            f"Column {xlabel} contains {count_x_nans} NaN. "
+            "Fix this error or delete row(s)."
+        )
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
     # ensure column y contains no nans
     count_y_nans = df[ylabel].isna().sum()
     if count_y_nans != 0:
@@ -177,6 +185,13 @@ def validate_data(
             "Fix this error or delete row(s)."
         )
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    # ensure columns x, y are of the same length
+    length_x = df[xlabel].notnull().sum()
+    length_y = df[ylabel].notnull().sum()
+    if length_x != length_y:
+        print(f"Columns {xlabel} and {ylabel} are not of the same length.")
+        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+
 
 if __name__ == "__main__":
     main()
