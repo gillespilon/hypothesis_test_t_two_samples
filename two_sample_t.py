@@ -11,10 +11,6 @@ Is the average of sample one less than the average of sample two?
 Scenario 3
 Is the average of sample one greater than the average of sample two?
 
-Scenario 4
-Is the average of sample one different from the average of sample two by a
-hypothesized difference?
-
 If you read a data file:
 - first row is column labels: x y
 - first column is sample number: 1 2
@@ -47,9 +43,7 @@ def main():
     )
     # create DataFrames
     # df, sample_one, sample_two = create_dataframe_examples()
-    df, sample_one, sample_two = create_dataframes(
-        title=path_in_title, filetypes=filetypes
-    )
+    df = create_dataframe(title=path_in_title, filetypes=filetypes)
     start_time = time.perf_counter()
     # scenario 1
     print("Scenario 1")
@@ -99,29 +93,16 @@ def main():
     ds.html_end(original_stdout=original_stdout, output_url=output_url)
 
 
-def create_dataframe_examples() -> List[pd.DataFrame]:
-    data = {
-        "x": [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
-        "y": [35, 28, 41, 44, 35, 31, 34, 38, 42, 36, 31, 30, 31, 34, 36, 29]
-    }
-    df = pd.DataFrame(data=data)
-    sample_one = df[df["x"] == 1]
-    sample_two = df[df["x"] == 2]
-    return (df, sample_one, sample_two)
-
-
-def create_dataframes(
+def create_dataframe(
     title: str,
     filetypes: List[Tuple[str, str]]
-) -> List[pd.DataFrame]:
+) -> pd.DataFrame:
     initialdir = Path(__file__).parent.resolve()
     path_in = ds.ask_open_file_name_path(
         title=title, initialdir=initialdir, filetypes=filetypes
     )
     df = ds.read_file(file_name=path_in)
-    sample_one = df[df["x"] == 1]
-    sample_two = df[df["x"] == 2]
-    return (df, sample_one, sample_two)
+    return df
 
 
 if __name__ == "__main__":
