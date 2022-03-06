@@ -146,12 +146,17 @@ def validate_data(
     output_url: str
 ) -> NoReturn:
     """
-    TODO: add docstring
+    Ensure that column x is integer.
+    Ensure that column y is integer or float.
+    Ensure there are no nans in columns x, y.
+    Ensure that the lengths of columns x, y are the same.
     """
+    # ensure column x is integer
     xlabel_type = df[xlabel].dtype
     if xlabel_type not in ['int64']:
         print("Data in xlabel column are not of type integer.")
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    # ensure column y is integer or float
     ylabel_type = df[ylabel].dtype
     if ylabel_type not in ['int64', 'float64']:
         print("Data in ylabel column are not of type integer or float.")
