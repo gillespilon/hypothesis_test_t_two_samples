@@ -113,7 +113,21 @@ def create_dataframe(
     title: str, filetypes: List[Tuple[str, str]]
 ) -> Tuple[pd.DataFrame, Path]:
     """
-    TODO: add docstring
+    Helper function to request Path of data file and create DataFrame.
+
+    Parameters
+    ----------
+    title : str
+        The title for the GUI window.
+    filetypes : List[Tuple[str, str]]
+        The list of acceptable data file types.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        The DataFrame of data.
+    path_in : Path
+        The Path of the input data file.
     """
     initialdir = Path(__file__).parent.resolve()
     path_in = ds.ask_open_file_name_path(
