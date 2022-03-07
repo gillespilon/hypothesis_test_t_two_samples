@@ -26,7 +26,9 @@ Example of how a data file should look:
 
 Validate the data set for dtypes, NaNs, and length.
 
-Requires datasense https://github.com/gillespilon/datasense
+Requires:
+- datasense https://github.com/gillespilon/datasense
+- Python 3.10 minimum
 """
 
 from typing import IO, List, NoReturn, Tuple, Union
