@@ -174,6 +174,17 @@ def validate_data(
     original_stdout : IO[str],
         A file object for the output of print().
     output_url : str,
+
+    Example
+    -------
+    >>> validate_data(
+    >>>     df=df,
+    >>>     path_in=path_in,
+    >>>     xlabel=xlabel,
+    >>>     ylabel=ylabel,
+    >>>     original_stdout=original_stdout,
+    >>>     output_url=output_url,
+    >>> )
     """
     # ensure column x is integer
     xlabel_type = df[xlabel].dtype
