@@ -24,6 +24,8 @@ Example of how a data file should look:
     2   31
     2   34
 
+Validate the data set for dtypes, NaNs, and length.
+
 Requires datasense https://github.com/gillespilon/datasense
 """
 
@@ -42,28 +44,31 @@ def main():
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
-    xlabel = "x"
-    ylabel = "y"
+    xlabel, ylabel = "x", "y"
     original_stdout = ds.html_begin(
         output_url=output_url, header_title=header_title, header_id=header_id
     )
     ds.script_summary(script_path=Path(__file__), action="started at")
     # create DataFrames
-    # df, sample_one, sample_two = create_dataframe_examples()
     df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
     print("Data file", path_in)
     print()
     start_time = time.perf_counter()
     validate_data(
-        df=df, path_in=path_in, xlabel=xlabel, ylabel=ylabel,
-        original_stdout=original_stdout, output_url=output_url
+        df=df,
+        path_in=path_in,
+        xlabel=xlabel,
+        ylabel=ylabel,
+        original_stdout=original_stdout,
+        output_url=output_url,
     )
     # scenario 1
     print("Scenario 1")
     print(
         "Is the average of sample one different from the average of sample "
-        "two?\n"
+        "two?"
     )
+    print()
     ds.two_sample_t(
         df=df,
         xlabel=xlabel,
@@ -75,10 +80,8 @@ def main():
     print()
     # scenario 2
     print("Scenario 2")
-    print(
-        "Is the average of sample one less than the average of sample "
-        "two?\n"
-    )
+    print("Is the average of sample one less than the average of sample two?")
+    print()
     ds.two_sample_t(
         df=df,
         xlabel=xlabel,
@@ -92,8 +95,9 @@ def main():
     print("Scenario 3")
     print(
         "Is the average of sample one greater than the average of sample "
-        "two?\n"
+        "two?"
     )
+    print()
     ds.two_sample_t(
         df=df,
         xlabel=xlabel,
@@ -128,6 +132,12 @@ def create_dataframe(
         The DataFrame of data.
     path_in : Path
         The Path of the input data file.
+
+    Example
+    -------
+    >>> df, path_in = create_dataframe(
+    >>>     title=path_in_title, filetypes=filetypes
+    >>> )
     """
     initialdir = Path(__file__).parent.resolve()
     path_in = ds.ask_open_file_name_path(
@@ -143,7 +153,7 @@ def validate_data(
     xlabel: str,
     ylabel: str,
     original_stdout: IO[str],
-    output_url: str
+    output_url: str,
 ) -> NoReturn:
     """
     Ensure that column x is integer.
@@ -153,12 +163,12 @@ def validate_data(
     """
     # ensure column x is integer
     xlabel_type = df[xlabel].dtype
-    if xlabel_type not in ['int64']:
+    if xlabel_type not in ["int64"]:
         print("Data in xlabel column are not of type integer.")
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
     # ensure column y is integer or float
     ylabel_type = df[ylabel].dtype
-    if ylabel_type not in ['int64', 'float64']:
+    if ylabel_type not in ["int64", "float64"]:
         print("Data in ylabel column are not of type integer or float.")
         ds.exit_script(original_stdout=original_stdout, output_url=output_url)
     # ensure column x contains no nans
