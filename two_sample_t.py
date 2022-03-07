@@ -160,6 +160,20 @@ def validate_data(
     Ensure that column y is integer or float.
     Ensure there are no nans in columns x, y.
     Ensure that the lengths of columns x, y are the same.
+
+    Parameters
+    ----------
+    df : pd.DataFrame,
+        The DataFrame to validate.
+    path_in : Union[Path, str],
+        The Path of the input file.
+    xlabel : str,
+        The column label of the column with the sample identifications.
+    ylabel : str,
+        The column label of the column with the sample data.
+    original_stdout : IO[str],
+        A file object for the output of print().
+    output_url : str,
     """
     # ensure column x is integer
     xlabel_type = df[xlabel].dtype
