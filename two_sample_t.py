@@ -168,7 +168,7 @@ def main():
     )
     ax.set_title(label="Box and whisker plot\nSample one", fontweight="bold")
     ax.set_xticks(ticks=[1], labels=["Sample one"], fontweight="bold")
-    ax.set_ylabel("y", fontweight="bold")
+    ax.set_ylabel("Y (units)", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="box_and_whisker_sample_one.svg", format="svg")
     ds.html_figure(
@@ -183,7 +183,7 @@ def main():
     )
     ax.set_title(label="Box and whisker plot\nSample two", fontweight="bold")
     ax.set_xticks(ticks=[1], labels=["Sample two"], fontweight="bold")
-    ax.set_ylabel("y", fontweight="bold")
+    ax.set_ylabel("Y (units)", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="box_and_whisker_sample_two.svg", format="svg")
     ds.html_figure(
@@ -202,14 +202,14 @@ def main():
         notch=True,
         showmeans=True
     )
-    ax1.set_xticks(ticks=[1], labels=['Sample one'], fontweight="bold")
-    ax2.set_xticks(ticks=[1], labels=['Sample two'], fontweight="bold")
+    ax1.set_xticks(ticks=[1], labels=["Sample one"], fontweight="bold")
+    ax2.set_xticks(ticks=[1], labels=["Sample two"], fontweight="bold")
     ax1.set_title(label="Sample one", fontweight="bold")
     ax2.set_title(label="Sample two", fontweight="bold")
-    ax1.set_ylabel('Y', fontweight="bold")
+    ax1.set_ylabel("Y (units)", fontweight="bold")
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
     fig.suptitle(
-        t='Box-and-whisker plots', fontweight='bold', x=mid
+        t="Box-and-whisker plots", fontweight="bold", x=mid
     )
     ds.despine(ax=ax1)
     ds.despine(ax=ax2)
