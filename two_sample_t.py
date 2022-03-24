@@ -147,16 +147,14 @@ def main():
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
     fig.suptitle(t="Histograms", fontweight="bold", x=mid)
     ax1.hist(x=y_sample_one, bins=16)
-    ax1.set_title(label='Sample one')
-    ax1.set_xlabel('y (data values)')
-    ax1.set_ylabel('Count')
+    ax1.set_title(label="Sample one", fontweight="bold")
+    ax1.set_ylabel("Count", fontweight="bold")
     ax2.hist(x=y_sample_two, bins=16)
-    ax2.set_title(label='Sample two')
-    ax2.set_xlabel('y (data values)')
-    ax2.set_ylabel('Count')
+    ax2.set_title(label="Sample two", fontweight="bold")
+    ax2.set_xlabel("Y (units)", fontweight="bold")
+    ax2.set_ylabel("Count", fontweight="bold")
     ds.despine(ax=ax1)
     ds.despine(ax=ax2)
-    fig.tight_layout()
     fig.savefig(fname="histograms_sample_one_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="histograms_sample_one_sample_two.svg",
