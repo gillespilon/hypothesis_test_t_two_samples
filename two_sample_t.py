@@ -44,6 +44,7 @@ def main():
     # define parameters
     filetypes = [("csv and feather files", ".csv .CSV .feather .FEATHER")]
     path_in_title = "Select csv or feather file to read"
+    colour_one = "#0077bb"
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
@@ -223,8 +224,8 @@ def main():
     # scatter plot sample one
     fig, ax = ds.plot_scatter_y(y=y_sample_one)
     ax.set_title(label="Scatter plot\nSample one", fontweight="bold")
-    ax.set_xlabel('X (Sample order)', fontweight="bold")
-    ax.set_ylabel('Y', fontweight="bold")
+    ax.set_xlabel("X (Sample order)", fontweight="bold")
+    ax.set_ylabel("Y (units)", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="scatter_sample_one.svg", format="svg")
     ds.html_figure(
@@ -234,17 +235,39 @@ def main():
     # scatter plot sample two
     fig, ax = ds.plot_scatter_y(y=y_sample_two)
     ax.set_title(label="Scatter plot\nSample two", fontweight="bold")
-    ax.set_xlabel('X (Sample order)', fontweight="bold")
-    ax.set_ylabel('Y', fontweight="bold")
+    ax.set_xlabel("X (Sample order)", fontweight="bold")
+    ax.set_ylabel("Y (units)", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="scatter_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="scatter_sample_two.svg",
         caption="scatter_sample_two.svg"
     )
-    # TODO:
     # one row, two column scatter plots sample one, sample two
-    # one row, two column normal probability plots sample one, sample two
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True)
+    ax1.plot(
+        y_sample_one, marker=".", markersize=8, linestyle="None",
+        color=colour_one
+    )
+    fig.suptitle(t="Scatter plots", fontweight="bold", fontsize=14)
+    ax1.set_title(label="Sample one", fontweight="bold", fontsize=12)
+    ax1.set_ylabel(ylabel="y", fontweight="bold")
+    ax1.set_xlabel(
+        xlabel="X (Sample order)", fontweight="bold", fontsize=10
+        )
+    ax2.plot(
+        y_sample_two, marker=".", markersize=8, linestyle="None",
+        color=colour_one
+    )
+    ax2.set_xlabel(xlabel="X (Sample order)", fontweight="bold", fontsize=10)
+    ax2.set_title(label="Sample two", fontweight="bold", fontsize=12)
+    ds.despine(ax=ax1)
+    ds.despine(ax=ax2)
+    fig.savefig(fname="scatter_sample_one_sample_two.svg", format="svg")
+    ds.html_figure(
+        file_name="scatter_sample_one_sample_two.svg",
+        caption="scatter_sample_one_sample_two.svg"
+    )
     # normal probability plot sample one
     fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=y_sample_one, plot=ax)
