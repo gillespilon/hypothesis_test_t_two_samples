@@ -114,6 +114,20 @@ def main():
     print()
     # TODO:
     # histogram sample one
+    fig, ax = ds.plot_histogram(
+        series=y_sample_one, number_bins=16, bin_range=(28, 44), bin_width=1
+    )
+    ax.set_xlabel('y (data values)')
+    ax.set_ylabel('Count')
+    ax.set_title(
+        label='Histogram of sample one', fontweight="bold", fontsize=10
+    )
+    ds.despine(ax=ax)
+    fig.savefig(fname="histogram_sample_one.svg", format="svg")
+    ds.html_figure(
+        file_name="histogram_sample_one.svg",
+        caption="histogram_sample_one.svg"
+    )
     # histogram sample two
     # two row, one column histograms sample one, sample two
     # box and whisker plot sample one
