@@ -251,7 +251,7 @@ def main():
     )
     fig.suptitle(t="Scatter plots", fontweight="bold", fontsize=14)
     ax1.set_title(label="Sample one", fontweight="bold", fontsize=12)
-    ax1.set_ylabel(ylabel="y", fontweight="bold")
+    ax1.set_ylabel(ylabel="Y (units)", fontweight="bold")
     ax1.set_xlabel(
         xlabel="X (Sample order)", fontweight="bold", fontsize=10
         )
