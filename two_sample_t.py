@@ -275,6 +275,8 @@ def main():
         label="Normal Probability Plot\nSample one",
         fontweight="bold", fontsize=10
     )
+    ax.set_ylabel(ylabel="Ordered Values", fontweight="bold")
+    ax.set_xlabel(xlabel="Theoretical Quantiles", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
     ds.html_figure(
@@ -289,6 +291,8 @@ def main():
         fontweight="bold", fontsize=10
     )
     ds.despine(ax=ax)
+    ax.set_ylabel(ylabel="Ordered Values", fontweight="bold")
+    ax.set_xlabel(xlabel="Theoretical Quantiles", fontweight="bold")
     fig.savefig(fname="normal_probability_plot_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="normal_probability_plot_sample_two.svg",
