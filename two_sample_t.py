@@ -129,6 +129,20 @@ def main():
         caption="histogram_sample_one.svg"
     )
     # histogram sample two
+    fig, ax = ds.plot_histogram(
+        series=y_sample_two, number_bins=16, bin_range=(28, 44), bin_width=1
+    )
+    ax.set_xlabel('y (data values)')
+    ax.set_ylabel('Count')
+    ax.set_title(
+        label='Histogram of sample two', fontweight="bold", fontsize=10
+    )
+    ds.despine(ax=ax)
+    fig.savefig(fname="histogram_sample_two.svg", format="svg")
+    ds.html_figure(
+        file_name="histogram_sample_two.svg",
+        caption="histogram_sample_two.svg"
+    )
     # two row, one column histograms sample one, sample two
     # box and whisker plot sample one
     # box and whisker plot sample two
