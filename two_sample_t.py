@@ -192,7 +192,6 @@ def main():
         file_name="box_and_whisker_sample_two.svg",
         caption="box_and_whisker_sample_two.svg"
     )
-    # TODO:
     # one row, two column box and whisker plots sample one, sample two
     fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharey=True)
     ax1.boxplot(
@@ -235,6 +234,17 @@ def main():
         caption="scatter_sample_one.svg"
     )
     # scatter plot sample two
+    fig, ax = ds.plot_scatter_y(y=y_sample_two)
+    ax.set_title(label="Scatter plot\nSample two", fontweight="bold")
+    ax.set_xlabel('X (Sample order)', fontweight="bold")
+    ax.set_ylabel('Y', fontweight="bold")
+    ds.despine(ax=ax)
+    fig.savefig(fname="scatter_sample_two.svg", format="svg")
+    ds.html_figure(
+        file_name="scatter_sample_two.svg",
+        caption="scatter_sample_two.svg"
+    )
+    # TODO:
     # one row, two column scatter plots sample one, sample two
     # normal probability plot sample one
     fig, ax = plt.subplots(nrows=1, ncols=1)
