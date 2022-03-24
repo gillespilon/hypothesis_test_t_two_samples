@@ -54,6 +54,8 @@ def main():
     ds.script_summary(script_path=Path(__file__), action="started at")
     # create DataFrames
     df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
+    y_sample_one = df["y"][df["x"] == 1]
+    y_sample_two = df["y"][df["x"] == 2]
     print("Data file", path_in)
     print()
     start_time = time.perf_counter()
@@ -122,7 +124,7 @@ def main():
     # one row, two column scatter plots sample one, sample two
     # normal probability plot sample one
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    fig, ax = ds.probability_plot(data=df["y"][df["x"] == 1], plot=ax)
+    fig, ax = ds.probability_plot(data=y_sample_one, plot=ax)
     ax.set_title(
         label="Normal Probability Plot\nSample one",
         fontweight="bold", fontsize=10
@@ -135,7 +137,7 @@ def main():
     )
     # normal probability plot sample two
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    fig, ax = ds.probability_plot(data=df["y"][df["x"] == 2], plot=ax)
+    fig, ax = ds.probability_plot(data=y_sample_two, plot=ax)
     ax.set_title(
         label="Normal Probability Plot\nSample two",
         fontweight="bold", fontsize=10
