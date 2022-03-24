@@ -121,11 +121,19 @@ def main():
     # scatter plot sample two
     # one row, two column scatter plots sample one, sample two
     # normal probability plot sample one
-    # normal probability plot sample two
     fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=df["y"][df["x"] == 1], plot=ax)
+    ax.set_title(
+        label=f"Normal Probability Plot\nSample one",
+        fontweight="bold", fontsize=10
+    )
     ds.despine(ax=ax)
     fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
+    ds.html_figure(
+        file_name="normal_probability_plot_sample_one.svg",
+        caption="normal_probability_plot_sample_one.svg"
+    )
+    # normal probability plot sample two
     stop_time = time.perf_counter()
     ds.script_summary(script_path=Path(__file__), action="finished at")
     ds.report_summary(start_time=start_time, stop_time=stop_time)
