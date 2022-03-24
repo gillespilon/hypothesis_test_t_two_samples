@@ -142,7 +142,6 @@ def main():
         file_name="histogram_sample_two.svg",
         caption="histogram_sample_two.svg"
     )
-    # TODO:
     # two row, one column histograms sample one, sample two
     fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True, sharey=True)
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
@@ -163,7 +162,22 @@ def main():
         file_name="histograms_sample_one_sample_two.svg",
         caption="histograms_sample_one_sample_two.svg"
     )
+    # TODO:
     # box and whisker plot sample one
+    fig, ax = ds.plot_boxplot(
+        series=y_sample_one,
+        notch=True,
+        showmeans=True
+    )
+    ax.set_title(label="Box and whisker plot\nSample one", fontweight="bold")
+    ax.set_xticks(ticks=[1], labels=["Sample one"], fontweight="bold")
+    ax.set_ylabel("y", fontweight="bold")
+    ds.despine(ax=ax)
+    fig.savefig(fname="box_and_whisker_sample_one.svg", format="svg")
+    ds.html_figure(
+        file_name="box_and_whisker_sample_one.svg",
+        caption="box_and_whisker_sample_one.svg"
+    )
     # box and whisker plot sample two
     # one row, two column box and whisker plots sample one, sample two
     # scatter plot sample one
