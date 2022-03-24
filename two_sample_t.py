@@ -177,7 +177,6 @@ def main():
         file_name="box_and_whisker_sample_one.svg",
         caption="box_and_whisker_sample_one.svg"
     )
-    # TODO:
     # box and whisker plot sample two
     fig, ax = ds.plot_boxplot(
         series=y_sample_two,
@@ -193,7 +192,37 @@ def main():
         file_name="box_and_whisker_sample_two.svg",
         caption="box_and_whisker_sample_two.svg"
     )
+    # TODO:
     # one row, two column box and whisker plots sample one, sample two
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharey=True)
+    ax1.boxplot(
+        x=y_sample_one,
+        notch=True,
+        showmeans=True
+    )
+    ax2.boxplot(
+        x=y_sample_two,
+        notch=True,
+        showmeans=True
+    )
+    ax1.set_xticks(ticks=[1], labels=['Sample one'], fontweight="bold")
+    ax2.set_xticks(ticks=[1], labels=['Sample two'], fontweight="bold")
+    ax1.set_title(label="Sample one", fontweight="bold")
+    ax2.set_title(label="Sample two", fontweight="bold")
+    ax1.set_ylabel('Y', fontweight="bold")
+    mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
+    fig.suptitle(
+        t='Box-and-whisker plots', fontweight='bold', x=mid
+    )
+    ds.despine(ax=ax1)
+    ds.despine(ax=ax2)
+    fig.savefig(
+        fname="box_and_whiskers_sample_one_sample_two.svg", format="svg"
+    )
+    ds.html_figure(
+        file_name="box_and_whiskers_sample_one_sample_two.svg",
+        caption="box_and_whiskers_sample_one_sample_two.svg"
+    )
     # scatter plot sample one
     # scatter plot sample two
     # one row, two column scatter plots sample one, sample two
