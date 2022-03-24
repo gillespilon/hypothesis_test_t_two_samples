@@ -124,7 +124,7 @@ def main():
     fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=df["y"][df["x"] == 1], plot=ax)
     ax.set_title(
-        label=f"Normal Probability Plot\nSample one",
+        label="Normal Probability Plot\nSample one",
         fontweight="bold", fontsize=10
     )
     ds.despine(ax=ax)
@@ -134,6 +134,18 @@ def main():
         caption="normal_probability_plot_sample_one.svg"
     )
     # normal probability plot sample two
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    fig, ax = ds.probability_plot(data=df["y"][df["x"] == 2], plot=ax)
+    ax.set_title(
+        label="Normal Probability Plot\nSample two",
+        fontweight="bold", fontsize=10
+    )
+    ds.despine(ax=ax)
+    fig.savefig(fname="normal_probability_plot_sample_two.svg", format="svg")
+    ds.html_figure(
+        file_name="normal_probability_plot_sample_two.svg",
+        caption="normal_probability_plot_sample_two.svg"
+    )
     stop_time = time.perf_counter()
     ds.script_summary(script_path=Path(__file__), action="finished at")
     ds.report_summary(start_time=start_time, stop_time=stop_time)
