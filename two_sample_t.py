@@ -224,6 +224,16 @@ def main():
         caption="box_and_whiskers_sample_one_sample_two.svg"
     )
     # scatter plot sample one
+    fig, ax = ds.plot_scatter_y(y=y_sample_one)
+    ax.set_title(label="Scatter plot\nSample one", fontweight="bold")
+    ax.set_xlabel('X (Sample order)', fontweight="bold")
+    ax.set_ylabel('Y', fontweight="bold")
+    ds.despine(ax=ax)
+    fig.savefig(fname="scatter_sample_one.svg", format="svg")
+    ds.html_figure(
+        file_name="scatter_sample_one.svg",
+        caption="scatter_sample_one.svg"
+    )
     # scatter plot sample two
     # one row, two column scatter plots sample one, sample two
     # normal probability plot sample one
