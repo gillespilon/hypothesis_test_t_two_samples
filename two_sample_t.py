@@ -35,6 +35,7 @@ from typing import IO, List, NoReturn, Tuple, Union
 from pathlib import Path
 import time
 
+import matplotlib.pyplot as plt
 import datasense as ds
 import pandas as pd
 
@@ -109,6 +110,22 @@ def main():
     )
     print("========== end of scenario ==========")
     print()
+    # TODO:
+    # histogram sample one
+    # histogram sample two
+    # two row, one column histograms sample one, sample two
+    # box and whisker plot sample one
+    # box and whisker plot sample two
+    # one row, two column box and whisker plots sample one, sample two
+    # scatter plot sample one
+    # scatter plot sample two
+    # one row, two column scatter plots sample one, sample two
+    # normal probability plot sample one
+    # normal probability plot sample two
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    fig, ax = ds.probability_plot(data=df["y"][df["x"] == 1], plot=ax)
+    ds.despine(ax=ax)
+    fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
     stop_time = time.perf_counter()
     ds.script_summary(script_path=Path(__file__), action="finished at")
     ds.report_summary(start_time=start_time, stop_time=stop_time)
@@ -183,10 +200,10 @@ def validate_data(
     >>>     df=df,
     >>>     path_in=path_in,
     >>>     xlabel=xlabel,
-    >>>     ylabel=ylabel,
     >>>     original_stdout=original_stdout,
     >>>     output_url=output_url,
     >>> )
+    >>>     ylabel=ylabel,
     """
     # ensure column x is integer
     xlabel_type = df[xlabel].dtype
