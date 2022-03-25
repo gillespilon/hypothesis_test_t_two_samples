@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 """
-Two-sample t test. Four scenarios.
+Two-sample t test. Three scenarios.
 
 Scenario 1
 Is the average of sample one different from the average of sample two?
@@ -25,6 +25,9 @@ Example of how a data file should look:
     2   34
 
 Validate the data set for dtypes, NaNs, and length.
+
+Check assumptions of normality, homogeneity of variance using parametric
+and non-parametric methods.
 
 Requires:
 - datasense https://github.com/gillespilon/datasense
