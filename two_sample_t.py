@@ -283,7 +283,7 @@ def main():
         fontweight="bold", fontsize=10
     )
     ds.despine(ax=ax)
-    ax.set_ylabel(ylabel="Ordered Values", fontweight="bold")
+    ax.yaxis.get_label().set(fontweight="bold")
     ax.set_xlabel(xlabel="Theoretical Quantiles", fontweight="bold")
     fig.savefig(fname="normal_probability_plot_sample_two.svg", format="svg")
     ds.html_figure(
