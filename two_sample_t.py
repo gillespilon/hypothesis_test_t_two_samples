@@ -193,16 +193,8 @@ def main():
     )
     # one row, two column box and whisker plots sample one, sample two
     fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharey=True)
-    ax1.boxplot(
-        x=y_sample_one,
-        notch=True,
-        showmeans=True
-    )
-    ax2.boxplot(
-        x=y_sample_two,
-        notch=True,
-        showmeans=True
-    )
+    ax1.boxplot(x=y_sample_one, notch=True, showmeans=True)
+    ax2.boxplot(x=y_sample_two, notch=True, showmeans=True)
     ax1.set_xticks(ticks=[1], labels=["Sample one"], fontweight="bold")
     ax2.set_xticks(ticks=[1], labels=["Sample two"], fontweight="bold")
     ax1.set_title(label="Sample one", fontweight="bold")
@@ -275,7 +267,7 @@ def main():
         label="Normal Probability Plot\nSample one",
         fontweight="bold", fontsize=10
     )
-    ax.set_ylabel(ylabel="Ordered Values", fontweight="bold")
+    ax.yaxis.get_label().set(fontweight="bold")
     ax.set_xlabel(xlabel="Theoretical Quantiles", fontweight="bold")
     ds.despine(ax=ax)
     fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
