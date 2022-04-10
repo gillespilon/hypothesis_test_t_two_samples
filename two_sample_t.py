@@ -249,7 +249,6 @@ def main():
     fig, ax = ds.probability_plot(data=y_sample_one, plot=ax)
     ax.set_title(label="Normal Probability Plot\nSample one")
     ax.set_xlabel(xlabel="Theoretical Quantiles")
-    ds.despine(ax=ax)
     fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
     ds.html_figure(
         file_name="normal_probability_plot_sample_one.svg",
@@ -259,7 +258,6 @@ def main():
     fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=y_sample_two, plot=ax)
     ax.set_title(label="Normal Probability Plot\nSample two")
-    ds.despine(ax=ax)
     ax.set_xlabel(xlabel="Theoretical Quantiles")
     fig.savefig(fname="normal_probability_plot_sample_two.svg", format="svg")
     ds.html_figure(
