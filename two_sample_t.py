@@ -124,7 +124,6 @@ def main():
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
     ax.set_title(label="Histogram of sample one")
-    ds.despine(ax=ax)
     fig.savefig(fname="histogram_sample_one.svg", format="svg")
     ds.html_figure(
         file_name="histogram_sample_one.svg",
@@ -137,7 +136,6 @@ def main():
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
     ax.set_title(label="Histogram of sample two")
-    ds.despine(ax=ax)
     fig.savefig(fname="histogram_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="histogram_sample_two.svg",
