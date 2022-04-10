@@ -204,7 +204,6 @@ def main():
     ax.set_title(label="Scatter plot\nSample one")
     ax.set_xlabel("X (Sample order)")
     ax.set_ylabel("Y (units)")
-    ds.despine(ax=ax)
     fig.savefig(fname="scatter_sample_one.svg", format="svg")
     ds.html_figure(
         file_name="scatter_sample_one.svg",
@@ -215,7 +214,6 @@ def main():
     ax.set_title(label="Scatter plot\nSample two")
     ax.set_xlabel("X (Sample order)")
     ax.set_ylabel("Y (units)")
-    ds.despine(ax=ax)
     fig.savefig(fname="scatter_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="scatter_sample_two.svg",
