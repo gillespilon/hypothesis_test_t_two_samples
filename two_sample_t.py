@@ -160,15 +160,10 @@ def main():
         caption="histograms_sample_one_sample_two.svg"
     )
     # box and whisker plot sample one
-    fig, ax = ds.plot_boxplot(
-        series=y_sample_one,
-        notch=True,
-        showmeans=True
-    )
+    fig, ax = ds.plot_boxplot(series=y_sample_one, notch=True, showmeans=True)
     ax.set_title(label="Box and whisker plot\nSample one", fontweight="bold")
     ax.set_xticks(ticks=[1], labels=["Sample one"], fontweight="bold")
     ax.set_ylabel("Y (units)", fontweight="bold")
-    ds.despine(ax=ax)
     fig.savefig(fname="box_and_whisker_sample_one.svg", format="svg")
     ds.html_figure(
         file_name="box_and_whisker_sample_one.svg",
@@ -183,7 +178,6 @@ def main():
     ax.set_title(label="Box and whisker plot\nSample two", fontweight="bold")
     ax.set_xticks(ticks=[1], labels=["Sample two"], fontweight="bold")
     ax.set_ylabel("Y (units)", fontweight="bold")
-    ds.despine(ax=ax)
     fig.savefig(fname="box_and_whisker_sample_two.svg", format="svg")
     ds.html_figure(
         file_name="box_and_whisker_sample_two.svg",
