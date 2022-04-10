@@ -56,6 +56,7 @@ def main():
         output_url=output_url, header_title=header_title, header_id=header_id
     )
     ds.script_summary(script_path=Path(__file__), action="started at")
+    ds.style_graph()
     # create DataFrames
     df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
     y_sample_one = df["y"][df["x"] == 1]
@@ -120,11 +121,9 @@ def main():
     fig, ax = ds.plot_histogram(
         series=y_sample_one, number_bins=16, bin_range=(28, 44), bin_width=1
     )
-    ax.set_xlabel("Y (units)", fontweight="bold")
-    ax.set_ylabel("Count", fontweight="bold")
-    ax.set_title(
-        label="Histogram of sample one", fontweight="bold", fontsize=10
-    )
+    ax.set_xlabel("Y (units)")
+    ax.set_ylabel("Count")
+    ax.set_title(label="Histogram of sample one")
     ds.despine(ax=ax)
     fig.savefig(fname="histogram_sample_one.svg", format="svg")
     ds.html_figure(
@@ -135,11 +134,9 @@ def main():
     fig, ax = ds.plot_histogram(
         series=y_sample_two, number_bins=16, bin_range=(28, 44), bin_width=1
     )
-    ax.set_xlabel("Y (units)", fontweight="bold")
-    ax.set_ylabel("Count", fontweight="bold")
-    ax.set_title(
-        label="Histogram of sample two", fontweight="bold", fontsize=10
-    )
+    ax.set_xlabel("Y (units)")
+    ax.set_ylabel("Count")
+    ax.set_title(label="Histogram of sample two")
     ds.despine(ax=ax)
     fig.savefig(fname="histogram_sample_two.svg", format="svg")
     ds.html_figure(
