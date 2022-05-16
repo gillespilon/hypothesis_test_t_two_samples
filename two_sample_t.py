@@ -118,8 +118,11 @@ def main():
     print("========== end of scenario ==========")
     print()
     # histogram sample one
+    # fig, ax = ds.plot_histogram(
+    #     series=y_sample_one, number_bins=16, bin_range=(28, 44), bin_width=1
+    # )
     fig, ax = ds.plot_histogram(
-        series=y_sample_one, number_bins=16, bin_range=(28, 44), bin_width=1
+        series=y_sample_one
     )
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
@@ -130,8 +133,11 @@ def main():
         caption="histogram_sample_one.svg"
     )
     # histogram sample two
+    # fig, ax = ds.plot_histogram(
+    #     series=y_sample_two, number_bins=16, bin_range=(28, 44), bin_width=1
+    # )
     fig, ax = ds.plot_histogram(
-        series=y_sample_two, number_bins=16, bin_range=(28, 44), bin_width=1
+        series=y_sample_two
     )
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
@@ -145,10 +151,12 @@ def main():
     fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True, sharey=True)
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
     fig.suptitle(t="Histograms", x=mid)
-    ax1.hist(x=y_sample_one, bins=16)
+    # ax1.hist(x=y_sample_one, bins=16)
+    ax1.hist(x=y_sample_one)
     ax1.set_title(label="Sample one")
     ax1.set_ylabel("Count")
-    ax2.hist(x=y_sample_two, bins=16)
+    # ax2.hist(x=y_sample_two, bins=16)
+    ax2.hist(x=y_sample_two)
     ax2.set_title(label="Sample two")
     ax2.set_xlabel("Y (units)")
     ax2.set_ylabel("Count")
