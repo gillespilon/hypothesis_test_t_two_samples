@@ -34,7 +34,7 @@ Requires:
 - Python 3.10 minimum
 """
 
-from typing import IO, List, NoReturn, Tuple, Union
+from typing import IO, NoReturn, Union
 from pathlib import Path
 import time
 
@@ -44,15 +44,20 @@ import pandas as pd
 
 
 def main():
-    start_time = time.perf_counter()
-    # define parameters
     filetypes = [("csv and feather files", ".csv .CSV .feather .FEATHER")]
     path_in_title = "Select csv or feather file to read"
+    initialdir = Path(__file__).parent.resolve()
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
     xlabel, ylabel = "x", "y"
     colour_one = "#0077bb"
+    path_in = ds.ask_open_file_name_path(
+        title=path_in_title,
+        initialdir=initialdir,
+        filetypes=filetypes
+    )
+    start_time = time.perf_counter()
     original_stdout = ds.html_begin(
         output_url=output_url,
         header_title=header_title,
@@ -63,8 +68,8 @@ def main():
         action="started at"
     )
     ds.style_graph()
-    # create DataFrames
-    df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
+    print("Data file", path_in)
+    df = ds.read_file(file_name=path_in)
     y_sample_one = df["y"][df["x"] == 1]
     y_sample_two = df["y"][df["x"] == 2]
     print("Data file", path_in)
@@ -287,40 +292,6 @@ def main():
         stop_time=stop_time
     )
     ds.html_end(original_stdout=original_stdout, output_url=output_url)
-
-
-def create_dataframe(
-    title: str, filetypes: List[Tuple[str, str]]
-) -> Tuple[pd.DataFrame, Path]:
-    """
-    Helper function to request Path of data file and create DataFrame.
-
-    Parameters
-    ----------
-    title : str
-        The title for the GUI window.
-    filetypes : List[Tuple[str, str]]
-        The list of acceptable data file types.
-
-    Returns
-    -------
-    df : pd.DataFrame
-        The DataFrame of data.
-    path_in : Path
-        The Path of the input data file.
-
-    Example
-    -------
-    >>> df, path_in = create_dataframe(
-    >>>     title=path_in_title, filetypes=filetypes
-    >>> )
-    """
-    initialdir = Path(__file__).parent.resolve()
-    path_in = ds.ask_open_file_name_path(
-        title=title, initialdir=initialdir, filetypes=filetypes
-    )
-    df = ds.read_file(file_name=path_in)
-    return (df, path_in)
 
 
 def validate_data(
