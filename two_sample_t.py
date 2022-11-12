@@ -48,13 +48,15 @@ def main():
     # define parameters
     filetypes = [("csv and feather files", ".csv .CSV .feather .FEATHER")]
     path_in_title = "Select csv or feather file to read"
-    colour_one = "#0077bb"
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
     xlabel, ylabel = "x", "y"
+    colour_one = "#0077bb"
     original_stdout = ds.html_begin(
-        output_url=output_url, header_title=header_title, header_id=header_id
+        output_url=output_url,
+        header_title=header_title,
+        header_id=header_id
     )
     ds.script_summary(
         script_path=Path(__file__),
@@ -276,8 +278,14 @@ def main():
         caption="normal_probability_plot_sample_two.svg"
     )
     stop_time = time.perf_counter()
-    ds.script_summary(script_path=Path(__file__), action="finished at")
-    ds.report_summary(start_time=start_time, stop_time=stop_time)
+    ds.script_summary(
+        script_path=Path(__file__),
+        action="finished at"
+    )
+    ds.report_summary(
+        start_time=start_time,
+        stop_time=stop_time
+    )
     ds.html_end(original_stdout=original_stdout, output_url=output_url)
 
 
