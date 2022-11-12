@@ -56,7 +56,10 @@ def main():
     original_stdout = ds.html_begin(
         output_url=output_url, header_title=header_title, header_id=header_id
     )
-    ds.script_summary(script_path=Path(__file__), action="started at")
+    ds.script_summary(
+        script_path=Path(__file__),
+        action="started at"
+    )
     ds.style_graph()
     # create DataFrames
     df, path_in = create_dataframe(title=path_in_title, filetypes=filetypes)
