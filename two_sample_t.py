@@ -50,7 +50,6 @@ def main():
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
-    xlabel, ylabel = "x", "y"
     colour_one = "#0077bb"
     path_in = ds.ask_open_file_name_path(
         title=path_in_title,
@@ -69,11 +68,14 @@ def main():
     )
     ds.style_graph()
     print("Data file", path_in)
-    df = ds.read_file(file_name=path_in)
-    y_sample_one = df["y"][df["x"] == 1]
-    y_sample_two = df["y"][df["x"] == 2]
-    print("Data file", path_in)
     print()
+    df = ds.read_file(file_name=path_in)
+    columns = df.columns
+    columnx = columns[0]
+    columny = columns[1]
+    xlabel, ylabel = columnx, columny
+    y_sample_one = df[columny][df[columnx] == 1]
+    y_sample_two = df[columny][df[columnx] == 2]
     validate_data(
         df=df,
         path_in=path_in,
