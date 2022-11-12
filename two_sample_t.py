@@ -51,6 +51,7 @@ def main():
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
     colour_one = "#0077bb"
+    decimals = 3
     path_in = ds.ask_open_file_name_path(
         title=path_in_title,
         initialdir=initialdir,
@@ -76,6 +77,40 @@ def main():
     xlabel, ylabel = columnx, columny
     y_sample_one = df[columny][df[columnx] == 1]
     y_sample_two = df[columny][df[columnx] == 2]
+    parametric_statistics = ds.parametric_summary(
+        series=y_sample_one,
+        decimals=decimals
+    ).to_string()
+    print("Parametric statistics for y level 1")
+    print(parametric_statistics)
+    print()
+    parametric_statistics = ds.parametric_summary(
+        series=y_sample_two,
+        decimals=decimals
+    ).to_string()
+    print("Parametric statistics for y level 2")
+    print(parametric_statistics)
+    print()
+    nonparametric_statistics = ds.nonparametric_summary(
+        series=y_sample_one,
+        alphap=1/3,
+        betap=1/3,
+        decimals=decimals
+    ).to_string()
+    print()
+    print("Non-parametric statistics for y level 1")
+    print(nonparametric_statistics)
+    print()
+    nonparametric_statistics = ds.nonparametric_summary(
+        series=y_sample_two,
+        alphap=1/3,
+        betap=1/3,
+        decimals=decimals
+    ).to_string()
+    print()
+    print("Non-parametric statistics for y level 2")
+    print(nonparametric_statistics)
+    print()
     validate_data(
         df=df,
         path_in=path_in,
