@@ -50,6 +50,7 @@ def main():
     output_url = "two_sample_t_test.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
+    significance_level = 0.05
     colour_one = "#0077bb"
     decimals = 3
     path_in = ds.ask_open_file_name_path(
@@ -130,7 +131,7 @@ def main():
         xlabel=xlabel,
         ylabel=ylabel,
         alternative_hypothesis="unequal",
-        significance_level=0.05,
+        significance_level=significance_level,
     )
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
@@ -140,7 +141,7 @@ def main():
         xlabel=xlabel,
         ylabel=ylabel,
         alternative_hypothesis="less than",
-        significance_level=0.05,
+        significance_level=significance_level,
     )
     print("Scenario 3")
     print(
@@ -153,7 +154,7 @@ def main():
         xlabel=xlabel,
         ylabel=ylabel,
         alternative_hypothesis="greater than",
-        significance_level=0.05,
+        significance_level=significance_level,
     )
     fig, ax = ds.plot_histogram(
         series=y_sample_one
