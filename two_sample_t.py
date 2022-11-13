@@ -119,7 +119,6 @@ def main():
         original_stdout=original_stdout,
         output_url=output_url,
     )
-    # scenario 1
     print("Scenario 1")
     print(
         "Is the average of sample one different from the average of sample "
@@ -133,9 +132,6 @@ def main():
         alternative_hypothesis="unequal",
         significance_level=0.05,
     )
-    print("========== end of scenario ==========")
-    print()
-    # scenario 2
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
     print()
@@ -146,9 +142,6 @@ def main():
         alternative_hypothesis="less than",
         significance_level=0.05,
     )
-    print("========== end of scenario ==========")
-    print()
-    # scenario 3
     print("Scenario 3")
     print(
         "Is the average of sample one greater than the average of sample "
@@ -162,12 +155,6 @@ def main():
         alternative_hypothesis="greater than",
         significance_level=0.05,
     )
-    print("========== end of scenario ==========")
-    print()
-    # histogram sample one
-    # fig, ax = ds.plot_histogram(
-    #     series=y_sample_one, number_bins=16, bin_range=(28, 44), bin_width=1
-    # )
     fig, ax = ds.plot_histogram(
         series=y_sample_one
     )
@@ -179,10 +166,6 @@ def main():
         file_name="histogram_sample_one.svg",
         caption="histogram_sample_one.svg"
     )
-    # histogram sample two
-    # fig, ax = ds.plot_histogram(
-    #     series=y_sample_two, number_bins=16, bin_range=(28, 44), bin_width=1
-    # )
     fig, ax = ds.plot_histogram(
         series=y_sample_two
     )
