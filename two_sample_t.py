@@ -38,6 +38,7 @@ from typing import IO, NoReturn, Union
 from pathlib import Path
 import time
 
+from statsmodels.stats.power import TTestIndPower
 import matplotlib.pyplot as plt
 import datasense as ds
 import pandas as pd
@@ -51,7 +52,7 @@ def main():
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
     significance_level = 0.05
-    colour_one = "#0077bb"
+    colour = "#0077bb"
     decimals = 3
     path_in = ds.ask_open_file_name_path(
         title=path_in_title,
@@ -133,6 +134,7 @@ def main():
         alternative_hypothesis="unequal",
         significance_level=significance_level,
     )
+
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
     print()
@@ -156,9 +158,7 @@ def main():
         alternative_hypothesis="greater than",
         significance_level=significance_level,
     )
-    fig, ax = ds.plot_histogram(
-        series=y_sample_one
-    )
+    fig, ax = ds.plot_histogram(series=y_sample_one)
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
     ax.set_title(label="Histogram of sample one")
@@ -261,8 +261,11 @@ def main():
     # one row, two column scatter plots sample one, sample two
     fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True)
     ax1.plot(
-        y_sample_one, marker=".", markersize=8, linestyle="None",
-        color=colour_one
+        y_sample_one,
+        marker=".",
+        markersize=8,
+        linestyle="None",
+        color=colour
     )
     fig.suptitle(t="Scatter plots")
     ax1.set_title(label="Sample one")
@@ -271,8 +274,11 @@ def main():
         xlabel="X (Sample order)"
         )
     ax2.plot(
-        y_sample_two, marker=".", markersize=8, linestyle="None",
-        color=colour_one
+        y_sample_two,
+        marker=".",
+        markersize=8,
+        linestyle="None",
+        color=colour
     )
     ax2.set_xlabel(xlabel="X (Sample order)")
     ax2.set_title(label="Sample two")
@@ -284,7 +290,6 @@ def main():
         caption="scatter_sample_one_sample_two.svg"
     )
     # normal probability plot sample one
-    fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=y_sample_one, plot=ax)
     ax.set_title(label="Normal Probability Plot\nSample one")
     ax.set_xlabel(xlabel="Theoretical Quantiles")
@@ -294,7 +299,6 @@ def main():
         caption="normal_probability_plot_sample_one.svg"
     )
     # normal probability plot sample two
-    fig, ax = plt.subplots(nrows=1, ncols=1)
     fig, ax = ds.probability_plot(data=y_sample_two, plot=ax)
     ax.set_title(label="Normal Probability Plot\nSample two")
     ax.set_xlabel(xlabel="Theoretical Quantiles")
