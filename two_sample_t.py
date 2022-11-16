@@ -34,14 +34,11 @@ Requires:
 - Python 3.10 minimum
 """
 
-from typing import IO, NoReturn, Union
 from pathlib import Path
 import time
 
-from statsmodels.stats.power import TTestIndPower
 import matplotlib.pyplot as plt
 import datasense as ds
-import pandas as pd
 
 
 def main():
@@ -73,54 +70,35 @@ def main():
     print("Data file", path_in)
     print()
     df = ds.read_file(file_name=path_in)
-    columns = df.columns
-    columnx = columns[0]
-    columny = columns[1]
-    xlabel, ylabel = columnx, columny
-    y_sample_one = df[columny][df[columnx] == 1]
-    y_sample_two = df[columny][df[columnx] == 2]
-    parametric_statistics = ds.parametric_summary(
-        series=y_sample_one,
-        decimals=decimals
-    ).to_string()
-    print("Parametric statistics for y level 1")
-    print(parametric_statistics)
-    print()
-    parametric_statistics = ds.parametric_summary(
-        series=y_sample_two,
-        decimals=decimals
-    ).to_string()
-    print("Parametric statistics for y level 2")
-    print(parametric_statistics)
-    print()
-    nonparametric_statistics = ds.nonparametric_summary(
-        series=y_sample_one,
-        alphap=1/3,
-        betap=1/3,
-        decimals=decimals
-    ).to_string()
-    print()
-    print("Non-parametric statistics for y level 1")
-    print(nonparametric_statistics)
-    print()
-    nonparametric_statistics = ds.nonparametric_summary(
-        series=y_sample_two,
-        alphap=1/3,
-        betap=1/3,
-        decimals=decimals
-    ).to_string()
-    print()
-    print("Non-parametric statistics for y level 2")
-    print(nonparametric_statistics)
-    print()
-    validate_data(
-        df=df,
-        path_in=path_in,
-        xlabel=xlabel,
-        ylabel=ylabel,
-        original_stdout=original_stdout,
-        output_url=output_url,
-    )
+    series1 = df[df.columns[0]].dropna()
+    series2 = df[df.columns[1]].dropna()
+    levels = [1, 2]
+    for level in levels:
+        if level == 1:
+            series = series1
+        else:
+            series = series2
+        parametric_statistics = ds.parametric_summary(
+            series=series,
+            decimals=decimals
+        ).to_string()
+        print(f"Parametric statistics for y level {level}")
+        print(parametric_statistics)
+        print()
+    for level in levels:
+        if level == 1:
+            series = series1
+        else:
+            series = series2
+        nonparametric_statistics = ds.nonparametric_summary(
+            series=series,
+            alphap=1/3,
+            betap=1/3,
+            decimals=decimals
+        ).to_string()
+        print(f"Non-parametric statistics for y level {level}")
+        print(nonparametric_statistics)
+        print()
     print("Scenario 1")
     print(
         "Is the average of sample one different from the average of sample "
@@ -128,10 +106,9 @@ def main():
     )
     print()
     ds.two_sample_t(
-        df=df,
-        xlabel=xlabel,
-        ylabel=ylabel,
-        alternative_hypothesis="unequal",
+        series1=series1,
+        series2=series2,
+        alternative_hypothesis="two-sided",
         significance_level=significance_level,
     )
 
@@ -139,10 +116,9 @@ def main():
     print("Is the average of sample one less than the average of sample two?")
     print()
     ds.two_sample_t(
-        df=df,
-        xlabel=xlabel,
-        ylabel=ylabel,
-        alternative_hypothesis="less than",
+        series1=series1,
+        series2=series2,
+        alternative_hypothesis="less",
         significance_level=significance_level,
     )
     print("Scenario 3")
@@ -152,116 +128,180 @@ def main():
     )
     print()
     ds.two_sample_t(
-        df=df,
-        xlabel=xlabel,
-        ylabel=ylabel,
-        alternative_hypothesis="greater than",
+        series1=series1,
+        series2=series2,
+        alternative_hypothesis="greater",
         significance_level=significance_level,
     )
-    fig, ax = ds.plot_histogram(series=y_sample_one)
+    fig, ax = ds.plot_histogram(series=series1)
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
     ax.set_title(label="Histogram of sample one")
-    fig.savefig(fname="histogram_sample_one.svg", format="svg")
+    fig.savefig(
+        fname="histogram_sample_one.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="histogram_sample_one.svg",
         caption="histogram_sample_one.svg"
     )
-    fig, ax = ds.plot_histogram(
-        series=y_sample_two
-    )
+    fig, ax = ds.plot_histogram(series=series2)
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
     ax.set_title(label="Histogram of sample two")
-    fig.savefig(fname="histogram_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="histogram_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="histogram_sample_two.svg",
         caption="histogram_sample_two.svg"
     )
     # two row, one column histograms sample one, sample two
-    fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True, sharey=True)
+    fig, (ax1, ax2) = plt.subplots(
+        nrows=2,
+        ncols=1,
+        sharex=True,
+        sharey=True
+    )
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
     fig.suptitle(t="Histograms", x=mid)
-    # ax1.hist(x=y_sample_one, bins=16)
-    ax1.hist(x=y_sample_one)
+    # ax1.hist(x=series1, bins=16)
+    ax1.hist(x=series1)
     ax1.set_title(label="Sample one")
     ax1.set_ylabel("Count")
-    # ax2.hist(x=y_sample_two, bins=16)
-    ax2.hist(x=y_sample_two)
+    # ax2.hist(x=series2, bins=16)
+    ax2.hist(x=series2)
     ax2.set_title(label="Sample two")
     ax2.set_xlabel("Y (units)")
     ax2.set_ylabel("Count")
     ds.despine(ax=ax1)
     ds.despine(ax=ax2)
-    fig.savefig(fname="histograms_sample_one_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="histograms_sample_one_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="histograms_sample_one_sample_two.svg",
         caption="histograms_sample_one_sample_two.svg"
     )
     # box and whisker plot sample one
-    fig, ax = ds.plot_boxplot(series=y_sample_one, notch=True, showmeans=True)
+    fig, ax = ds.plot_boxplot(
+        series=series1,
+        notch=True,
+        showmeans=True
+    )
     ax.set_title(label="Box and whisker plot\nSample one")
-    ax.set_xticks(ticks=[1], labels=["Sample one"])
+    ax.set_xticks(
+        ticks=[1],
+        labels=["Sample one"]
+    )
     ax.set_ylabel("Y (units)")
-    fig.savefig(fname="box_and_whisker_sample_one.svg", format="svg")
+    fig.savefig(
+        fname="box_and_whisker_sample_one.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="box_and_whisker_sample_one.svg",
         caption="box_and_whisker_sample_one.svg"
     )
     # box and whisker plot sample two
-    fig, ax = ds.plot_boxplot(series=y_sample_two, notch=True, showmeans=True)
+    fig, ax = ds.plot_boxplot(
+        series=series2,
+        notch=True,
+        showmeans=True
+    )
     ax.set_title(label="Box and whisker plot\nSample two")
-    ax.set_xticks(ticks=[1], labels=["Sample two"])
+    ax.set_xticks(
+        ticks=[1],
+        labels=["Sample two"]
+    )
     ax.set_ylabel("Y (units)")
-    fig.savefig(fname="box_and_whisker_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="box_and_whisker_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="box_and_whisker_sample_two.svg",
         caption="box_and_whisker_sample_two.svg"
     )
     # one row, two column box and whisker plots sample one, sample two
-    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharey=True)
-    ax1.boxplot(x=y_sample_one, notch=True, showmeans=True)
-    ax2.boxplot(x=y_sample_two, notch=True, showmeans=True)
-    ax1.set_xticks(ticks=[1], labels=["Sample one"])
-    ax2.set_xticks(ticks=[1], labels=["Sample two"])
+    fig, (ax1, ax2) = plt.subplots(
+        nrows=1,
+        ncols=2,
+        sharey=True
+    )
+    ax1.boxplot(
+        x=series1,
+        notch=True,
+        showmeans=True
+    )
+    ax2.boxplot(
+        x=series2,
+        notch=True,
+        showmeans=True
+    )
+    ax1.set_xticks(
+        ticks=[1],
+        labels=["Sample one"]
+    )
+    ax2.set_xticks(
+        ticks=[1],
+        labels=["Sample two"]
+    )
     ax1.set_title(label="Sample one")
     ax2.set_title(label="Sample two")
     ax1.set_ylabel("Y (units)")
     mid = (fig.subplotpars.right + fig.subplotpars.left) / 2
-    fig.suptitle(t="Box-and-whisker plots", x=mid)
+    fig.suptitle(
+        t="Box-and-whisker plots",
+        x=mid
+    )
     ds.despine(ax=ax1)
     ds.despine(ax=ax2)
     fig.savefig(
-        fname="box_and_whiskers_sample_one_sample_two.svg", format="svg"
+        fname="box_and_whiskers_sample_one_sample_two.svg",
+        format="svg"
     )
     ds.html_figure(
         file_name="box_and_whiskers_sample_one_sample_two.svg",
         caption="box_and_whiskers_sample_one_sample_two.svg"
     )
     # scatter plot sample one
-    fig, ax = ds.plot_scatter_y(y=y_sample_one)
+    fig, ax = ds.plot_scatter_y(y=series1)
     ax.set_title(label="Scatter plot\nSample one")
     ax.set_xlabel("X (Sample order)")
     ax.set_ylabel("Y (units)")
-    fig.savefig(fname="scatter_sample_one.svg", format="svg")
+    fig.savefig(
+        fname="scatter_sample_one.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="scatter_sample_one.svg",
         caption="scatter_sample_one.svg"
     )
     # scatter plot sample two
-    fig, ax = ds.plot_scatter_y(y=y_sample_two)
+    fig, ax = ds.plot_scatter_y(y=series2)
     ax.set_title(label="Scatter plot\nSample two")
     ax.set_xlabel("X (Sample order)")
     ax.set_ylabel("Y (units)")
-    fig.savefig(fname="scatter_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="scatter_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="scatter_sample_two.svg",
         caption="scatter_sample_two.svg"
     )
     # one row, two column scatter plots sample one, sample two
-    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True)
+    fig, (ax1, ax2) = plt.subplots(
+        nrows=1,
+        ncols=2,
+        sharex=True,
+        sharey=True
+    )
     ax1.plot(
-        y_sample_one,
+        series1,
         marker=".",
         markersize=8,
         linestyle="None",
@@ -274,7 +314,7 @@ def main():
         xlabel="X (Sample order)"
         )
     ax2.plot(
-        y_sample_two,
+        series2,
         marker=".",
         markersize=8,
         linestyle="None",
@@ -284,25 +324,40 @@ def main():
     ax2.set_title(label="Sample two")
     ds.despine(ax=ax1)
     ds.despine(ax=ax2)
-    fig.savefig(fname="scatter_sample_one_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="scatter_sample_one_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="scatter_sample_one_sample_two.svg",
         caption="scatter_sample_one_sample_two.svg"
     )
     # normal probability plot sample one
-    fig, ax = ds.probability_plot(data=y_sample_one, plot=ax)
+    fig, ax = ds.probability_plot(
+        data=series1,
+        plot=ax
+    )
     ax.set_title(label="Normal Probability Plot\nSample one")
     ax.set_xlabel(xlabel="Theoretical Quantiles")
-    fig.savefig(fname="normal_probability_plot_sample_one.svg", format="svg")
+    fig.savefig(
+        fname="normal_probability_plot_sample_one.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="normal_probability_plot_sample_one.svg",
         caption="normal_probability_plot_sample_one.svg"
     )
     # normal probability plot sample two
-    fig, ax = ds.probability_plot(data=y_sample_two, plot=ax)
+    fig, ax = ds.probability_plot(
+        data=series2,
+        plot=ax
+    )
     ax.set_title(label="Normal Probability Plot\nSample two")
     ax.set_xlabel(xlabel="Theoretical Quantiles")
-    fig.savefig(fname="normal_probability_plot_sample_two.svg", format="svg")
+    fig.savefig(
+        fname="normal_probability_plot_sample_two.svg",
+        format="svg"
+    )
     ds.html_figure(
         file_name="normal_probability_plot_sample_two.svg",
         caption="normal_probability_plot_sample_two.svg"
@@ -316,88 +371,10 @@ def main():
         start_time=start_time,
         stop_time=stop_time
     )
-    ds.html_end(original_stdout=original_stdout, output_url=output_url)
-
-
-def validate_data(
-    df: pd.DataFrame,
-    path_in: Union[Path, str],
-    xlabel: str,
-    ylabel: str,
-    original_stdout: IO[str],
-    output_url: str,
-) -> NoReturn:
-    """
-    Ensure that column x is integer.
-    Ensure that column y is integer or float.
-    Ensure there are no nans in columns x, y.
-    Ensure that the lengths of columns x, y are the same.
-
-    Parameters
-    ----------
-    df : pd.DataFrame,
-        The DataFrame to validate.
-    path_in : Union[Path, str],
-        The Path of the input file.
-    xlabel : str,
-        The column label of the column with the sample identifications.
-    ylabel : str,
-        The column label of the column with the sample data.
-    original_stdout : IO[str],
-        A file object for the output of print().
-    output_url : str,
-
-    Example
-    -------
-    >>> validate_data(
-    >>>     df=df,
-    >>>     path_in=path_in,
-    >>>     xlabel=xlabel,
-    >>>     original_stdout=original_stdout,
-    >>>     output_url=output_url,
-    >>> )
-    >>>     ylabel=ylabel,
-    """
-    # ensure column x is integer
-    xlabel_type = df[xlabel].dtype
-    if xlabel_type not in ["int64"]:
-        print("Data in xlabel column are not of type integer.")
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-    # ensure column y is integer or float
-    ylabel_type = df[ylabel].dtype
-    if ylabel_type not in ["int64", "float64"]:
-        print("Data in ylabel column are not of type integer or float.")
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-    # ensure column x contains no nans
-    count_x_nans = df[xlabel].isna().sum()
-    if count_x_nans != 0:
-        print(
-            f"Column {xlabel} contains {count_x_nans} NaN. "
-            "Fix this error or delete row(s)."
-        )
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-    # ensure column x contains no nans
-    count_x_nans = df[xlabel].isna().sum()
-    if count_x_nans != 0:
-        print(
-            f"Column {xlabel} contains {count_x_nans} NaN. "
-            "Fix this error or delete row(s)."
-        )
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-    # ensure column y contains no nans
-    count_y_nans = df[ylabel].isna().sum()
-    if count_y_nans != 0:
-        print(
-            f"Column {ylabel} contains {count_y_nans} NaN. "
-            "Fix this error or delete row(s)."
-        )
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
-    # ensure columns x, y are of the same length
-    length_x = df[xlabel].notnull().sum()
-    length_y = df[ylabel].notnull().sum()
-    if length_x != length_y:
-        print(f"Columns {xlabel} and {ylabel} are not of the same length.")
-        ds.exit_script(original_stdout=original_stdout, output_url=output_url)
+    ds.html_end(
+        original_stdout=original_stdout,
+        output_url=output_url
+    )
 
 
 if __name__ == "__main__":
