@@ -39,6 +39,7 @@ import time
 
 import matplotlib.pyplot as plt
 import datasense as ds
+import pandas as pd
 
 
 def main():
@@ -50,12 +51,13 @@ def main():
     header_id = "two-sample-t-test"
     significance_level = 0.05
     colour = "#0077bb"
-    decimals = 3
-    path_in = ds.ask_open_file_name_path(
-        title=path_in_title,
-        initialdir=initialdir,
-        filetypes=filetypes
-    )
+    decimals = 16
+    width = 7
+    # path_in = ds.ask_open_file_name_path(
+    #     title=path_in_title,
+    #     initialdir=initialdir,
+    #     filetypes=filetypes
+    # )
     start_time = time.perf_counter()
     original_stdout = ds.html_begin(
         output_url=output_url,
@@ -67,11 +69,19 @@ def main():
         action="started at"
     )
     ds.style_graph()
-    print("Data file", path_in)
-    print()
-    df = ds.read_file(file_name=path_in)
-    series1 = df[df.columns[0]].dropna()
-    series2 = df[df.columns[1]].dropna()
+    series1= pd.Series(
+        data=[32, 37, 35, 38, 41, 44, 35, 31, 34, 38, 42],
+        name="y1"
+    )
+    series2= pd.Series(
+        data=[36, 31, 30, 31, 34, 36, 39, 32, 31],
+        name="y2"
+    )
+    # print("Data file", path_in)
+    # print()
+    # df = ds.read_file(file_name=path_in)
+    # series1 = df[df.columns[0]].dropna()
+    # series2 = df[df.columns[1]].dropna()
     levels = [1, 2]
     for level in levels:
         if level == 1:
@@ -105,21 +115,24 @@ def main():
         "two?"
     )
     print()
-    ds.two_sample_t(
+    result = ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="two-sided",
         significance_level=significance_level,
+        width=width,
+        decimals=decimals
     )
-
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
     print()
-    ds.two_sample_t(
+    result = ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="less",
         significance_level=significance_level,
+        width=width,
+        decimals=decimals
     )
     print("Scenario 3")
     print(
@@ -127,11 +140,13 @@ def main():
         "two?"
     )
     print()
-    ds.two_sample_t(
+    result = ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="greater",
         significance_level=significance_level,
+        width=width,
+        decimals=decimals
     )
     fig, ax = ds.plot_histogram(series=series1)
     ax.set_xlabel("Y (units)")
