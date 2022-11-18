@@ -46,7 +46,7 @@ def main():
     filetypes = [("csv and feather files", ".csv .CSV .feather .FEATHER")]
     path_in_title = "Select csv or feather file to read"
     initialdir = Path(__file__).parent.resolve()
-    output_url = "two_sample_t_test.html"
+    output_url = "two_sample_t.html"
     header_title = "Two-sample t test"
     header_id = "two-sample-t-test"
     significance_level = 0.05
@@ -123,6 +123,9 @@ def main():
         width=width,
         decimals=decimals
     )
+    print("result:")
+    print(result)
+    print()
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
     print()
@@ -134,6 +137,9 @@ def main():
         width=width,
         decimals=decimals
     )
+    print("result:")
+    print(result)
+    print()
     print("Scenario 3")
     print(
         "Is the average of sample one greater than the average of sample "
@@ -148,6 +154,9 @@ def main():
         width=width,
         decimals=decimals
     )
+    print("result:")
+    print(result)
+    print()
     fig, ax = ds.plot_histogram(series=series1)
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
