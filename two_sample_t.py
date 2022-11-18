@@ -70,11 +70,11 @@ def main():
     )
     ds.style_graph()
     series1= pd.Series(
-        data=[32, 37, 35, 38, 41, 44, 35, 31, 34, 38, 42],
+        data=[32, 37, 35, 28, 41, 44, 35, 31, 34, 38, 42],
         name="y1"
     )
     series2= pd.Series(
-        data=[36, 31, 30, 31, 34, 36, 39, 32, 31],
+        data=[36, 31, 30, 31, 34, 36, 29, 32, 31],
         name="y2"
     )
     # print("Data file", path_in)
