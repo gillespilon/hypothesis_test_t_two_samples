@@ -69,11 +69,11 @@ def main():
         action="started at"
     )
     ds.style_graph()
-    series1= pd.Series(
+    series1 = pd.Series(
         data=[32, 37, 35, 28, 41, 44, 35, 31, 34, 38, 42],
         name="y1"
     )
-    series2= pd.Series(
+    series2 = pd.Series(
         data=[36, 31, 30, 31, 34, 36, 29, 32, 31],
         name="y2"
     )
@@ -115,7 +115,7 @@ def main():
         "two?"
     )
     print()
-    result = ds.two_sample_t(
+    ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="two-sided",
@@ -123,13 +123,10 @@ def main():
         width=width,
         decimals=decimals
     )
-    print("result:")
-    print(result)
-    print()
     print("Scenario 2")
     print("Is the average of sample one less than the average of sample two?")
     print()
-    result = ds.two_sample_t(
+    ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="less",
@@ -137,16 +134,13 @@ def main():
         width=width,
         decimals=decimals
     )
-    print("result:")
-    print(result)
-    print()
     print("Scenario 3")
     print(
         "Is the average of sample one greater than the average of sample "
         "two?"
     )
     print()
-    result = ds.two_sample_t(
+    ds.two_sample_t(
         series1=series1,
         series2=series2,
         alternative_hypothesis="greater",
@@ -154,9 +148,6 @@ def main():
         width=width,
         decimals=decimals
     )
-    print("result:")
-    print(result)
-    print()
     fig, ax = ds.plot_histogram(series=series1)
     ax.set_xlabel("Y (units)")
     ax.set_ylabel("Count")
