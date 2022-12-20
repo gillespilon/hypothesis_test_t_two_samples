@@ -29,9 +29,8 @@ Validate the data set for dtypes, NaNs, and length.
 Check assumptions of normality, homogeneity of variance using parametric
 and non-parametric methods.
 
-Requires:
-- datasense https://github.com/gillespilon/datasense
-- Python 3.10 minimum
+Requires datasense
+https://github.com/gillespilon/datasense
 """
 
 from pathlib import Path
@@ -46,8 +45,9 @@ def main():
     filetypes = [("csv and feather files", ".csv .CSV .feather .FEATHER")]
     path_in_title = "Select csv or feather file to read"
     initialdir = Path(__file__).parent.resolve()
-    output_url = "two_sample_t.html"
+    # path_in = Path("two_sample_t_data.csv")
     header_title = "Two-sample t test"
+    output_url = "two_sample_t.html"
     header_id = "two-sample-t-test"
     significance_level = 0.05
     colour = "#0077bb"
